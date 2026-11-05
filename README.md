@@ -102,6 +102,8 @@ UniDepth V2 backbone for every sparse depth alignment method. **TTA**: test-time
 backbone. **Align**: sparse depth alignment of a frozen backbone's output. Metrics are in meters,
 and **bold** marks the best value in each column.
 
+<div align="center">
+
 <table>
 <thead>
 <tr><th rowspan="2" align="left"><sub>Method</sub></th><th rowspan="2" align="left"><sub>Type</sub></th><th colspan="2"><sub>NYUv2</sub></th><th colspan="2"><sub>KITTI-DC</sub></th><th colspan="2"><sub>DDAD</sub></th><th colspan="2"><sub>DyDToF</sub></th></tr>
@@ -117,6 +119,8 @@ and **bold** marks the best value in each column.
 <tr><td align="left"><sub><b>FoSA (Ours)</b></sub></td><td align="left"><sub>Align</sub></td><td align="center"><sub>0.148</sub></td><td align="center"><sub>0.064</sub></td><td align="center"><sub>1.749</sub></td><td align="center"><sub>0.585</sub></td><td align="center"><sub><b>4.551</b></sub></td><td align="center"><sub><b>1.527</b></sub></td><td align="center"><sub><b>1.854</b></sub></td><td align="center"><sub><b>0.798</b></sub></td></tr>
 </tbody>
 </table>
+
+</div>
 
 <p align="center">
   <img src="assets/fosa-qual-kitti.jpg" alt="Qualitative comparison on KITTI-DC with a DVD backbone: error maps and aligned depth for LS, Polynomial, Piecewise, and FoSA" width="100%">
