@@ -34,7 +34,7 @@ backbone predictions and the same sparse measurements.
 
 ## 🏆 Comparison with depth completion methods
 
-UniDepth V2 backbone for every sparse depth alignment method. **TTA**: test-time adaptation of the
+UniDepth V2 backbone for every sparse depth alignment method. **TTO**: test-time optimization of the
 backbone. **Align**: sparse depth alignment of a frozen backbone's output.
 
 <div align="center">
@@ -45,9 +45,9 @@ backbone. **Align**: sparse depth alignment of a frozen backbone's output.
 <tr><th>RMSE</th><th>MAE</th><th>RMSE</th><th>MAE</th><th>RMSE</th><th>MAE</th><th>RMSE</th><th>MAE</th></tr>
 </thead>
 <tbody>
-<tr><td align="left">Zero-DC</td><td align="left">TTA</td><td align="center">0.152</td><td align="center">0.097</td><td align="center">1.515</td><td align="center"><ins>0.509</ins></td><td align="center">7.163</td><td align="center">3.621</td><td align="center">3.399</td><td align="center">2.038</td></tr>
-<tr><td align="left">Marigold-DC</td><td align="left">TTA</td><td align="center"><ins>0.135</ins></td><td align="center"><b>0.053</b></td><td align="center"><ins>1.483</ins></td><td align="center">0.550</td><td align="center">6.401</td><td align="center">2.708</td><td align="center">2.662</td><td align="center">1.094</td></tr>
-<tr><td align="left">TestPromptDC</td><td align="left">TTA</td><td align="center"><b>0.128</b></td><td align="center"><ins>0.054</ins></td><td align="center"><b>1.480</b></td><td align="center"><b>0.482</b></td><td align="center">5.652</td><td align="center"><ins>1.963</ins></td><td align="center"><ins>2.311</ins></td><td align="center"><ins>0.927</ins></td></tr>
+<tr><td align="left">Zero-DC</td><td align="left">TTO</td><td align="center">0.152</td><td align="center">0.097</td><td align="center">1.515</td><td align="center"><ins>0.509</ins></td><td align="center">7.163</td><td align="center">3.621</td><td align="center">3.399</td><td align="center">2.038</td></tr>
+<tr><td align="left">Marigold-DC</td><td align="left">TTO</td><td align="center"><ins>0.135</ins></td><td align="center"><b>0.053</b></td><td align="center"><ins>1.483</ins></td><td align="center">0.550</td><td align="center">6.401</td><td align="center">2.708</td><td align="center">2.662</td><td align="center">1.094</td></tr>
+<tr><td align="left">TestPromptDC</td><td align="left">TTO</td><td align="center"><b>0.128</b></td><td align="center"><ins>0.054</ins></td><td align="center"><b>1.480</b></td><td align="center"><b>0.482</b></td><td align="center">5.652</td><td align="center"><ins>1.963</ins></td><td align="center"><ins>2.311</ins></td><td align="center"><ins>0.927</ins></td></tr>
 <tr><td align="left">LS Solver</td><td align="left">Align</td><td align="center">0.175</td><td align="center">0.088</td><td align="center">2.321</td><td align="center">1.227</td><td align="center">6.316</td><td align="center">3.683</td><td align="center">2.638</td><td align="center">1.707</td></tr>
 <tr><td align="left">Polynomial</td><td align="left">Align</td><td align="center">0.169</td><td align="center">0.084</td><td align="center">2.255</td><td align="center">1.168</td><td align="center"><ins>5.183</ins></td><td align="center">2.672</td><td align="center">2.337</td><td align="center">1.306</td></tr>
 <tr><td align="left">Piecewise</td><td align="left">Align</td><td align="center">0.172</td><td align="center">0.086</td><td align="center">2.314</td><td align="center">1.203</td><td align="center">5.792</td><td align="center">3.111</td><td align="center">2.466</td><td align="center">1.438</td></tr>
@@ -114,7 +114,7 @@ TEPE on NYUv2 and KITTI-DC across backbones:
 |  | DVD | 0.722 | 0.686 | <ins>0.614</ins> | **0.558** |
 |  | DAv3 | <ins>0.600</ins> | 0.602 | 0.639 | **0.437** |
 
-TEPE on DyDToF against test-time adaptation:
+TEPE on DyDToF against test-time optimization methods:
 
 | Method | Backbone | TEPE |
 | :--- | :--- | :---: |
@@ -170,7 +170,7 @@ the memory used by the alignment step alone.
   </picture>
 </p>
 
-FoSA runs about 60–240× faster than the test-time adaptation methods. It processes more than 11
+FoSA runs about 60–240× faster than the test-time optimization methods. It processes more than 11
 frames per second including the backbone, because each reweighting step is one small linear solve
 with no backpropagation through the backbone.
 
