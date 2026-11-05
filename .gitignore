@@ -1,4 +1,6 @@
 # Local and private research assets
+input/
+cache/
 data/
 datasets/
 predictions/

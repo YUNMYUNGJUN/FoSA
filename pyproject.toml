@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fosa"
+version = "0.1.0"
+description = "FoSA: Fast Video Depth Completion via Fourier Scale-and-Shift Alignment"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "pillow",
+    "h5py",
+    "pyyaml",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+# torch/torchvision are installed separately per foundation-model env
+# (different CUDA builds, etc.), so they are not listed as hard deps.
+# Install them first, then `pip install -e .` to get the rest.
+torch = [
+    "torch>=2.1",
+    "torchvision>=0.16",
+]
+test = ["pytest"]
+
+[tool.setuptools]
+# main.py imports utils/ from this folder, so nothing is installed as a package: a top-level
+# "utils" in site-packages would shadow the "utils" packages of Video Depth Anything and DVD.
+packages = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100

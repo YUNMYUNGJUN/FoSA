@@ -1,0 +1,24 @@
+# FoSA on DVD v1.0, the paper's setting (Tables III, V).
+backbone: DVD
+input_patch_size: 14      # center-crop the inputs to multiples of 14
+dvd_root: third_party/DVD
+dvd_ckpt: model.safetensors   # under <dvd_root>/ckpt/ (DVD v1.0)
+dvd_max_side: 1280        # the long side is resized to at most this inside DVD
+
+fosa:
+  domain: inv             # aligned in inverse depth
+  max_depth: 200.0        # output clamp [0, max_depth] in metres
+  spatial_order: 6        # U_max; the order is chosen per clip among U = 0..6 (Sec. IV-E)
+  holdout_frac: 0.15      # anchors held out to choose the order
+  ridge: 0.01             # ridge on the non-constant coefficients, per anchor (Eq. 12)
+  bandwidth_scale: 1.0    # Delta = bandwidth_scale x local anchor spacing (Sec. IV-B)
+  bandwidth_cell: 32      # cell of the coarse Delta grid, pixels
+  irls_iters: 5           # Huber IRLS iterations
+  huber_delta: -1.0       # Huber threshold; < 0: 1.345 x 1.4826 x MAD of the residuals
+  mono_rho: 0.8           # rho of Eq. 13: a(p) >= (1 - rho) a0
+  min_valid: 16           # warn when a frame has fewer anchors than this
+  rtgm_grid: 8            # R-TGM grid of 8 x 8 points (K = 64)
+  rtgm_weight: 1.0        # w_temp
+  rtgm_alpha: 5.0         # eta of Eq. 10
+  fit_chunk: 16384        # anchors per design-matrix chunk (also fixes the summation order)
+  predict_chunk: 256      # image rows per predict chunk
