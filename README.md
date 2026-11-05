@@ -12,6 +12,8 @@
 
 </div>
 
+<img src="assets/fosa-teaser.png" align="right" width="40%" alt="Accuracy versus per-frame inference time on KITTI-DC; marker size is memory. FoSA sits with the training-free methods in runtime but close to test-time optimization methods in MAE">
+
 This work presents **FoSA**, a training-free method that turns the prediction of a frozen depth
 foundation model into accurate, temporally stable metric video depth using sparse range
 measurements. Each frame is aligned by one closed-form linear solve, with no backpropagation:
@@ -26,9 +28,6 @@ running 60–240× faster than them (0.09 s per frame, backbone included).
 
 <p align="center">
   <img src="assets/fosa-overview.png" alt="FoSA overview: Stage 1 expands scale and shift into damped Fourier fields; Stage 2 (R-TGM) regularizes the correction residual over time; each frame is aligned by a closed-form linear solve" width="100%">
-</p>
-<p align="center">
-  <img src="assets/fosa-teaser.png" alt="Accuracy versus per-frame inference time on KITTI-DC; marker size is memory. FoSA sits with the training-free methods in runtime but close to test-time optimization methods in MAE" width="60%">
 </p>
 
 ## 📰 News
