@@ -104,7 +104,7 @@ one of the conda environments above. Every command must actually run against thi
 
 UniDepth V2 backbone for every sparse depth alignment method. **TTA**: test-time adaptation of the
 backbone. **Align**: sparse depth alignment of a frozen backbone's output. Metrics are in meters,
-and **bold** marks the best value in each column.
+and the <mark>**highlighted**</mark> value is the best in each column.
 
 <div align="center">
 
@@ -115,12 +115,12 @@ and **bold** marks the best value in each column.
 </thead>
 <tbody>
 <tr><td align="left">Zero-DC</td><td align="left">TTA</td><td align="center">0.152</td><td align="center">0.097</td><td align="center">1.515</td><td align="center">0.509</td><td align="center">7.163</td><td align="center">3.621</td><td align="center">3.399</td><td align="center">2.038</td></tr>
-<tr><td align="left">Marigold-DC</td><td align="left">TTA</td><td align="center">0.135</td><td align="center"><b>0.053</b></td><td align="center">1.483</td><td align="center">0.550</td><td align="center">6.401</td><td align="center">2.708</td><td align="center">2.662</td><td align="center">1.094</td></tr>
-<tr><td align="left">TestPromptDC</td><td align="left">TTA</td><td align="center"><b>0.128</b></td><td align="center">0.054</td><td align="center"><b>1.480</b></td><td align="center"><b>0.482</b></td><td align="center">5.652</td><td align="center">1.963</td><td align="center">2.311</td><td align="center">0.927</td></tr>
+<tr><td align="left">Marigold-DC</td><td align="left">TTA</td><td align="center">0.135</td><td align="center"><mark><b>0.053</b></mark></td><td align="center">1.483</td><td align="center">0.550</td><td align="center">6.401</td><td align="center">2.708</td><td align="center">2.662</td><td align="center">1.094</td></tr>
+<tr><td align="left">TestPromptDC</td><td align="left">TTA</td><td align="center"><mark><b>0.128</b></mark></td><td align="center">0.054</td><td align="center"><mark><b>1.480</b></mark></td><td align="center"><mark><b>0.482</b></mark></td><td align="center">5.652</td><td align="center">1.963</td><td align="center">2.311</td><td align="center">0.927</td></tr>
 <tr><td align="left">LS Solver</td><td align="left">Align</td><td align="center">0.175</td><td align="center">0.088</td><td align="center">2.321</td><td align="center">1.227</td><td align="center">6.316</td><td align="center">3.683</td><td align="center">2.638</td><td align="center">1.707</td></tr>
 <tr><td align="left">Polynomial</td><td align="left">Align</td><td align="center">0.169</td><td align="center">0.084</td><td align="center">2.255</td><td align="center">1.168</td><td align="center">5.183</td><td align="center">2.672</td><td align="center">2.337</td><td align="center">1.306</td></tr>
 <tr><td align="left">Piecewise</td><td align="left">Align</td><td align="center">0.172</td><td align="center">0.086</td><td align="center">2.314</td><td align="center">1.203</td><td align="center">5.792</td><td align="center">3.111</td><td align="center">2.466</td><td align="center">1.438</td></tr>
-<tr><td align="left"><b>FoSA (Ours)</b></td><td align="left">Align</td><td align="center">0.148</td><td align="center">0.064</td><td align="center">1.749</td><td align="center">0.585</td><td align="center"><b>4.551</b></td><td align="center"><b>1.527</b></td><td align="center"><b>1.854</b></td><td align="center"><b>0.798</b></td></tr>
+<tr><td align="left"><b>FoSA (Ours)</b></td><td align="left">Align</td><td align="center">0.148</td><td align="center">0.064</td><td align="center">1.749</td><td align="center">0.585</td><td align="center"><mark><b>4.551</b></mark></td><td align="center"><mark><b>1.527</b></mark></td><td align="center"><mark><b>1.854</b></mark></td><td align="center"><mark><b>0.798</b></mark></td></tr>
 </tbody>
 </table>
 
