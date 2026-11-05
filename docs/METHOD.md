@@ -16,6 +16,7 @@ and run it.
 8. [Per-clip procedure](#8-per-clip-procedure)
 9. [Evaluation metrics](#9-evaluation-metrics)
 10. [Settings stated in the paper](#10-settings-stated-in-the-paper)
+11. [Defaults in this repository](#11-defaults-in-this-repository)
 
 ## 1. Problem
 
@@ -187,8 +188,10 @@ $$
 - **Uniqueness.** A small ridge on the constant coefficients, scaled with the anchor count and
   centered on $a_t^0 = 1$, keeps the system nonsingular on the first frame or when anchors barely
   differ in predicted value.
-- **Too few anchors.** A frame with fewer than two anchors skips the solve and keeps
-  $\theta_t = \bar\theta$, so its output is the backbone prediction scaled by $s_\text{init}$.
+- **Too few anchors.** A frame with fewer than two anchors keeps $\theta_t = \bar\theta$, so its
+  output is the backbone prediction scaled by $s_\text{init}$. In the code this follows from the
+  ridge prior rather than a separate branch: a frame without anchors and without a temporal
+  predecessor returns $\bar\theta$ exactly, and a single anchor is fitted under the ridge.
 
 **Monotonic projection.** After the reweighting ends, $a_t^0$ is clamped from below and the
 non-constant scale coefficients are rescaled so that
@@ -238,8 +241,9 @@ input : backbone predictions x_1..x_T, sparse measurements ξ_1..ξ_T (masks M_t
 
 ## 9. Evaluation metrics
 
-With aligned depth $D_t$, ground truth $D_t^{gt}$, and valid mask $V_t$ (which includes the anchor
-pixels), RMSE and MAE pool the valid pixels of all frames:
+With aligned depth $D_t$, ground truth $D_t^{gt}$, and valid mask $V_t = [D_t^{gt} > 0]$ (which
+includes the anchor pixels), RMSE and MAE pool the valid pixels of the $T$ frames of a clip, and the
+reported value is the mean over clips:
 
 $$
 \text{RMSE} = \sqrt{\frac{\sum_t\sum_{i,j} V_t(i,j)\,\bigl(D_t(i,j) - D_t^{gt}(i,j)\bigr)^2}{\sum_t\sum_{i,j} V_t(i,j)}}, \tag{14}
@@ -249,15 +253,16 @@ $$
 \text{MAE} = \frac{\sum_t\sum_{i,j} V_t(i,j)\,\bigl|D_t(i,j) - D_t^{gt}(i,j)\bigr|}{\sum_t\sum_{i,j} V_t(i,j)}. \tag{15}
 $$
 
-TEPE warps $D_t$ to frame $t+1$ with GMFlow optical flow, $\tilde D_t = \mathcal W(D_t, F_{t\to t+1})$,
-and averages over all clips:
+TEPE compares the frame-to-frame change of the aligned depth with that of the ground truth, pixel by
+pixel and without optical flow, on the pixels valid in both frames ($V_{t,t+1} = V_t V_{t+1}$):
 
 $$
-\text{TEPE} = \frac{1}{(T-1)HW}\sum_{t=1}^{T-1}\sum_{i,j}\bigl|\tilde D_t(i,j) - D_{t+1}(i,j)\bigr|. \tag{16}
+\text{TEPE} = \frac{1}{|\mathcal P|}\sum_{t\in\mathcal P}\frac{\sum_{i,j} V_{t,t+1}(i,j)\,\bigl|\bigl(D_{t+1} - D_t\bigr)(i,j) - \bigl(D_{t+1}^{gt} - D_t^{gt}\bigr)(i,j)\bigr|}{\sum_{i,j} V_{t,t+1}(i,j)}, \tag{16}
 $$
 
-TEPE needs no ground truth. All metrics are in meters. The ground truth of KITTI-DC and DDAD is
-clipped at 80 m.
+where $\mathcal P$ holds the consecutive frame pairs of the clip with at least one such pixel. It is
+averaged over clips like RMSE and MAE. All metrics are in meters. The ground truth of KITTI-DC and
+DDAD is clipped at 80 m.
 
 ## 10. Settings stated in the paper
 
@@ -274,9 +279,34 @@ clipped at 80 m.
 | Minimum anchors per frame | 2 (fewer → $\theta_t = \bar\theta$) |
 | Fitting representation | Depth for UniDepth V2; inverse depth for VDA, DVD, DAv3 |
 
-<!--
-TODO(server): Add a second table, "Defaults in this repository", listing the values the code uses
-for: maximum order U_max (and candidate set), η (Eq. 10), w_temp, number of grid points K (grid
-size), ridge strengths (non-constant / constant), Huber δ, ρ (Eq. 13). Take them from the config
-used for the paper's experiments, not from memory.
--->
+## 11. Defaults in this repository
+
+The values below are those of the paper's experiments. They are the defaults of
+`utils.align.FosaConfig` and are written out in every `config/<model>.yaml`; the config keys are
+given where a value can be changed.
+
+| Setting | Value | Config key |
+| :--- | :--- | :--- |
+| Maximum order $U_\text{max}$ | 6 ($\lvert F_6\rvert = 56$, $Q = 226$) | `spatial_order` |
+| Order candidates | $U = 0,\dots,6$ (Huber IRLS, ridge as below), plus the plain least-squares affine fit. The lowest held-out MAE wins (relative margin $10^{-4}$), never above the best $U = 0$ candidate | – |
+| Order-selection probe | IRLS rounds 1–4 on the first 6 frequencies ($U \le 2$), round 5 at $U_\text{max}$ | – |
+| Held-out anchors | 15%, deterministic hash split per frame; at least 32 to run the search | `holdout_frac` |
+| η (Eq. 10) | 5.0 | `rtgm_alpha` |
+| $f$ (Eq. 10) | Mean over pixels of $\operatorname{Var}_t[x]$ over mean over frames of $\operatorname{Var}_{\mathbf p}[x]$, on the backbone output | – |
+| $w_\text{temp}$ | 1.0 | `rtgm_weight` |
+| Grid points $K$ | 64 (8 × 8, evenly spaced over the image) | `rtgm_grid` |
+| Ridge, non-constant coefficients | 0.01 × number of anchors in the frame | `ridge` |
+| Ridge, constant coefficients | $10^{-8}$ × number of anchors in the frame, centered on $a_t^0 = 1$, $b_t^0 = 0$ | – |
+| Huber δ | 1.345 × 1.4826 × MAD of the residuals, recomputed every IRLS round | `huber_delta` (−1 = this rule) |
+| IRLS iterations | 5 | `irls_iters` |
+| ρ (Eq. 13) | 0.8; $a_t^0$ is floored at $10^{-3}$ | `mono_rho` |
+| Density grid | 32-pixel cells, Gaussian σ = 1.5 cells, $\Delta$ = 1.0 × local spacing | `bandwidth_cell`, `bandwidth_scale` |
+| Output range | [0, 200] m; inverse depth is floored at 1/200 | `max_depth` |
+| Fitting representation | Depth for UniDepth V2; inverse depth for VDA, DVD, DAv3 | `domain` |
+| Clips | 3 frames, non-overlapping; R-TGM carries over to the next clip of the same sequence | `--num-frames` |
+| Input crop | Center crop to multiples of 14 for VDA, DVD, DAv3; full frames for UniDepth V2 | `input_patch_size` |
+
+The projection $\Pi_t$ of Sec. 5 is the identity when the plain least-squares candidate is selected
+or when too few anchors are held out. When the Huber candidate at $U = 0$ wins the order search,
+the code keeps the projection, which then removes the whole correction, so R-TGM does not act on
+that clip.

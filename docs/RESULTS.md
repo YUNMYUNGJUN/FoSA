@@ -9,9 +9,8 @@ All numbers on this page are reported in the paper.
 3. [Generalization across backbones](#-generalization-across-backbones)
 4. [Temporal consistency](#-temporal-consistency)
 5. [Robustness to sparser measurements](#-robustness-to-sparser-measurements)
-6. [Ablation](#-ablation)
-7. [Efficiency](#-efficiency)
-8. [Qualitative results](#-qualitative-results)
+6. [Efficiency](#-efficiency)
+7. [Qualitative results](#-qualitative-results)
 
 ## 📋 Benchmarks and protocol
 
@@ -26,8 +25,9 @@ All numbers on this page are reported in the paper.
 All sparse depth alignment methods (LS Solver, Polynomial, Piecewise, Ours) are applied to the same
 backbone predictions and the same sparse measurements.
 
-- **RMSE** and **MAE** pool the valid pixels of all frames.
-- **TEPE** measures the frame-to-frame change of the aligned depth after warping with GMFlow optical flow.
+- **RMSE** and **MAE** pool the valid pixels of the frames of each clip and are averaged over clips.
+- **TEPE** compares the frame-to-frame change of the aligned depth with that of the ground truth, pixel
+  by pixel on the pixels valid in both frames (no optical flow), averaged over clips.
 - All metrics are in meters, and lower is better.
 - The ground truth of KITTI-DC and DDAD is clipped at 80 m.
 - **Bold** is the best and <ins>underlined</ins> the second best in each column (or row).
@@ -147,20 +147,6 @@ are used at every density.
 
 On the sparsest DyDToF and NYUv2 settings, too few anchors are held out to score a spatial
 correction. FoSA then falls back to the global fit and still regularizes it over time with R-TGM.
-
-## 🔬 Ablation
-
-NYUv2, DVD backbone. Components are added one at a time.
-
-| Configuration | RMSE | MAE | TEPE |
-| :--- | :---: | :---: | :---: |
-| Baseline (LS Solver) | 0.299 | 0.188 | 0.106 |
-| + Robust IRLS | 0.285 | 0.173 | 0.099 |
-| + Monotonic projection | 0.285 | 0.173 | 0.099 |
-| + Spatial field | 0.199 | 0.099 | 0.108 |
-| + Bandwidth (density-aware damping) | **0.187** | **0.092** | <ins>0.095</ins> |
-| + Auto order | <ins>0.188</ins> | <ins>0.093</ins> | 0.096 |
-| + R-TGM (**Full**) | <ins>0.188</ins> | <ins>0.093</ins> | **0.094** |
 
 ## ⚡ Efficiency
 

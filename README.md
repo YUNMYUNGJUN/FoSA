@@ -36,7 +36,8 @@ running 60–240× faster than them (0.09 s per frame, backbone included).
 
 ## 📰 News
 
-- **05-11-2026:** 🚀 Project page and foundation-model setup released. Code coming soon.
+- **05-11-2026:** 💻 Code released: `main.py` with configs for UniDepth V2, Video Depth Anything, DVD, and Depth Anything 3, and the scripts behind the paper's tables.
+- **05-11-2026:** 🚀 Project page and foundation-model setup released.
 
 ## 🧩 Supported Foundation Models
 
@@ -77,9 +78,12 @@ Each command does the following:
 
 1. Clones the model's official repository into `third_party/` at a pinned commit.
 2. Creates a conda environment.
-3. Installs the model following its official instructions.
-4. Downloads the checkpoints that are not fetched automatically (Video Depth Anything, DVD).
-   UniDepth V2 and Depth Anything 3 load their weights from Hugging Face on first use.
+3. Installs the model following its official instructions (for UniDepth V2, with the torch and
+   xformers versions of the paper's experiments, which reproduce its outputs bit for bit).
+4. Downloads the checkpoints that are not fetched automatically (Video Depth Anything; DVD and its
+   Wan2.1 base model). UniDepth V2 and Depth Anything 3 load their weights from Hugging Face on
+   first use.
+5. Installs FoSA's own dependencies (`pip install -e .`).
 
 After setup, activate the corresponding environment:
 
@@ -92,13 +96,42 @@ conda activate fosa-da3       # for Depth Anything 3
 
 ### 💻 Usage
 
-Coming with the code release.
+```bash
+# Align one sequence (format below) and save a result panel per frame
+python main.py --config config/unidepth.yaml --input input/scene.pt --save-vis
 
-<!--
-TODO(server): Replace with the real commands in the CAPA style: one bash block with a comment per
-command (e.g., align a single clip, process a directory, evaluate RMSE/MAE/TEPE), each run inside
-one of the conda environments above. Every command must actually run against this repository.
--->
+# Align every .pt sequence under a folder
+python main.py --config config/unidepth.yaml --input input/ --output outputs/
+
+# Evaluate on a benchmark: RMSE / MAE / TEPE per clip and on average
+python main.py --config config/unidepth.yaml --dataset kitti_video --dataset-path /path/to/KITTI-DC
+
+# Run every FoSA setting behind the paper's tables for one foundation model
+DATA_ROOT=/path/to/datasets bash scripts/reproduce.sh unidepth
+```
+
+Use `config/vda.yaml`, `config/dvd.yaml`, or `config/da3.yaml` inside the matching environment for
+the other foundation models. Each config holds the paper's settings; any FoSA setting can be
+overridden on the command line (`python main.py --help`, e.g. `--fosa-spatial-order 4`). The
+dataset layouts and the command for each table are in [docs/REPRODUCE.md](docs/REPRODUCE.md).
+
+### 📥 Input format
+
+There is no sample data to download; any RGB video with sparse metric depth works. Save each
+sequence as one `.pt` file holding a dictionary of tensors:
+
+```python
+torch.save({
+    "rgb": rgb,        # [N, 3, H, W] uint8 (or float in [0, 1])
+    "sparse": sparse,  # [N, H, W] float, meters, 0 = no measurement
+    "gt": gt,          # [N, H, W] float, meters, 0 = invalid (optional: enables the metrics)
+}, "input/scene.pt")
+```
+
+`main.py` aligns the frames in non-overlapping clips of `--num-frames` (default 3) and writes
+`<output>/<name>_depth.pt` with `depth` [N, H, W] in meters and `crop` (top, left, height, width): VDA,
+DVD, and DAv3 see the frames center-cropped to multiples of 14, as in the paper, so `depth` covers
+that crop. With `--save-vis`, `<output>/<name>_vis/` holds one panel per frame.
 
 ## 📊 Results
 
@@ -131,12 +164,13 @@ backbone. **Align**: sparse depth alignment of a frozen backbone's output. Metri
 </p>
 
 For the other backbones (VDA, DVD, DAv3), temporal consistency (TEPE), sparser measurements,
-ablation, efficiency, and qualitative results, see [docs/RESULTS.md](docs/RESULTS.md).
+efficiency, and qualitative results, see [docs/RESULTS.md](docs/RESULTS.md).
 
 ## 📚 Useful Documentation
 
 - 🧮 [Method](docs/METHOD.md): the alignment, equation by equation
-- 📊 [Results](docs/RESULTS.md): all tables and figures of the paper
+- 📊 [Results](docs/RESULTS.md): the tables and figures of the paper
+- 🔁 [Reproduce](docs/REPRODUCE.md): datasets, protocol, and the command behind each table
 
 ## 📄 License
 
