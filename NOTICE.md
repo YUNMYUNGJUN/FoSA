@@ -9,8 +9,19 @@ The benchmarks (NYUv2, VOID, DyDToF, KITTI-DC, DDAD) and the depth backbones (Un
 Depth Anything, DVD, Depth Anything 3) are obtained from their original sources and are subject to
 their respective licenses.
 
-<!--
-TODO(server): If any third-party code is vendored or adapted in this repository (backbone wrappers,
-GMFlow for TEPE, dataset loaders, baseline implementations), list each one here with its source
-URL, license, and copyright line, and keep the upstream license text where it requires it.
--->
+## Third-party code
+
+No third-party source code is copied into this repository. The backbone wrappers in
+`utils/base_models/` import the official code of each foundation model, which
+`scripts/setup_env.sh` clones into `third_party/` (not tracked); the README lists their sources,
+pinned commits, and licenses under "Third-Party Components".
+
+The following third-party values appear in the code:
+
+- `utils/visualize.py` uses the color values of the ColorBrewer "Spectral" (11 classes) and "Reds"
+  (9 classes) schemes. ColorBrewer: Copyright (c) 2002 Cynthia Brewer, Mark Harrower, and The
+  Pennsylvania State University. Licensed under the Apache License, Version 2.0.
+- `utils/order.py` splits the held-out anchors with a hash that uses the multiplier constants of
+  the MurmurHash3 32-bit finalizer (Austin Appleby, public domain) and the spatial-hash primes of
+  Teschner et al., "Optimized Spatial Hashing for Collision Detection of Deformable Objects"
+  (VMV 2003).
