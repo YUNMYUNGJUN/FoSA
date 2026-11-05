@@ -56,3 +56,6 @@ dist/
 # README figures and logos
 !assets/*.png
 !assets/*.jpg
+
+# Foundation-model code and weights (cloned by scripts/setup_env.sh)
+third_party/

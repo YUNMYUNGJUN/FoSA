@@ -1,7 +1,8 @@
-# FoSA methodology
+# 🧮 FoSA method
 
 This page summarizes the method in the paper, section by section, with the paper's equation
-numbers. It describes what the alignment computes; [running.md](running.md) describes how to run it.
+numbers. It describes what the alignment computes; the [README](../README.md#-quick-start) describes how to set it up
+and run it.
 
 ## Contents
 
