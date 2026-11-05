@@ -37,15 +37,21 @@ backbone predictions and the same sparse measurements.
 UniDepth V2 backbone for every sparse depth alignment method. **TTA**: test-time adaptation of the
 backbone. **Align**: sparse depth alignment of a frozen backbone's output.
 
-| Method | Type | NYUv2 RMSE | NYUv2 MAE | KITTI-DC RMSE | KITTI-DC MAE | DDAD RMSE | DDAD MAE | DyDToF RMSE | DyDToF MAE |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| Zero-DC | TTA | 0.152 | 0.097 | 1.515 | 0.509 | 7.163 | 3.621 | 3.399 | 2.038 |
-| Marigold-DC | TTA | 0.135 | **0.053** | 1.483 | 0.550 | 6.401 | 2.708 | 2.662 | 1.094 |
-| TestPromptDC | TTA | **0.128** | 0.054 | **1.480** | **0.482** | 5.652 | 1.963 | 2.311 | 0.927 |
-| LS Solver | Align | 0.175 | 0.088 | 2.321 | 1.227 | 6.316 | 3.683 | 2.638 | 1.707 |
-| Polynomial | Align | 0.169 | 0.084 | 2.255 | 1.168 | 5.183 | 2.672 | 2.337 | 1.306 |
-| Piecewise | Align | 0.172 | 0.086 | 2.314 | 1.203 | 5.792 | 3.111 | 2.466 | 1.438 |
-| **FoSA (Ours)** | Align | 0.148 | 0.064 | 1.749 | 0.585 | **4.551** | **1.527** | **1.854** | **0.798** |
+<table>
+<thead>
+<tr><th rowspan="2" align="left"><small>Method</small></th><th rowspan="2" align="left"><small>Type</small></th><th colspan="2"><small>NYUv2</small></th><th colspan="2"><small>KITTI-DC</small></th><th colspan="2"><small>DDAD</small></th><th colspan="2"><small>DyDToF</small></th></tr>
+<tr><th><small>RMSE</small></th><th><small>MAE</small></th><th><small>RMSE</small></th><th><small>MAE</small></th><th><small>RMSE</small></th><th><small>MAE</small></th><th><small>RMSE</small></th><th><small>MAE</small></th></tr>
+</thead>
+<tbody>
+<tr><td align="left"><small>Zero-DC</small></td><td align="left"><small>TTA</small></td><td align="center"><small>0.152</small></td><td align="center"><small>0.097</small></td><td align="center"><small>1.515</small></td><td align="center"><small>0.509</small></td><td align="center"><small>7.163</small></td><td align="center"><small>3.621</small></td><td align="center"><small>3.399</small></td><td align="center"><small>2.038</small></td></tr>
+<tr><td align="left"><small>Marigold-DC</small></td><td align="left"><small>TTA</small></td><td align="center"><small>0.135</small></td><td align="center"><small><b>0.053</b></small></td><td align="center"><small>1.483</small></td><td align="center"><small>0.550</small></td><td align="center"><small>6.401</small></td><td align="center"><small>2.708</small></td><td align="center"><small>2.662</small></td><td align="center"><small>1.094</small></td></tr>
+<tr><td align="left"><small>TestPromptDC</small></td><td align="left"><small>TTA</small></td><td align="center"><small><b>0.128</b></small></td><td align="center"><small>0.054</small></td><td align="center"><small><b>1.480</b></small></td><td align="center"><small><b>0.482</b></small></td><td align="center"><small>5.652</small></td><td align="center"><small>1.963</small></td><td align="center"><small>2.311</small></td><td align="center"><small>0.927</small></td></tr>
+<tr><td align="left"><small>LS Solver</small></td><td align="left"><small>Align</small></td><td align="center"><small>0.175</small></td><td align="center"><small>0.088</small></td><td align="center"><small>2.321</small></td><td align="center"><small>1.227</small></td><td align="center"><small>6.316</small></td><td align="center"><small>3.683</small></td><td align="center"><small>2.638</small></td><td align="center"><small>1.707</small></td></tr>
+<tr><td align="left"><small>Polynomial</small></td><td align="left"><small>Align</small></td><td align="center"><small>0.169</small></td><td align="center"><small>0.084</small></td><td align="center"><small>2.255</small></td><td align="center"><small>1.168</small></td><td align="center"><small>5.183</small></td><td align="center"><small>2.672</small></td><td align="center"><small>2.337</small></td><td align="center"><small>1.306</small></td></tr>
+<tr><td align="left"><small>Piecewise</small></td><td align="left"><small>Align</small></td><td align="center"><small>0.172</small></td><td align="center"><small>0.086</small></td><td align="center"><small>2.314</small></td><td align="center"><small>1.203</small></td><td align="center"><small>5.792</small></td><td align="center"><small>3.111</small></td><td align="center"><small>2.466</small></td><td align="center"><small>1.438</small></td></tr>
+<tr><td align="left"><small><b>FoSA (Ours)</b></small></td><td align="left"><small>Align</small></td><td align="center"><small>0.148</small></td><td align="center"><small>0.064</small></td><td align="center"><small>1.749</small></td><td align="center"><small>0.585</small></td><td align="center"><small><b>4.551</b></small></td><td align="center"><small><b>1.527</b></small></td><td align="center"><small><b>1.854</b></small></td><td align="center"><small><b>0.798</b></small></td></tr>
+</tbody>
+</table>
 
 <p align="center">
   <img src="../assets/fosa-per-frame-mae.png" alt="Per-frame MAE over 42 frames of NYUv2, DyDToF, KITTI-DC, and DDAD with a UniDepth V2 backbone; FoSA has the lowest MAE in every frame" width="100%">
@@ -168,7 +174,10 @@ the memory used by the alignment step alone.
 | **FoSA (Ours)** | 2637.6 (20.0) | 0.090 |
 
 <p align="center">
-  <img src="../assets/fosa-teaser.png" alt="Accuracy versus per-frame inference time on KITTI-DC; marker size is memory. FoSA sits with the training-free methods in runtime but close to test-time optimization methods in MAE" width="60%">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="../assets/fosa-teaser-dark.png">
+    <img src="../assets/fosa-teaser-light.png" alt="MAE on KITTI-DC versus inference time per frame (log scale), bubble size is GPU memory: training-free FoSA reaches 0.585 m at 0.09 s, close to test-time optimization methods (0.48-0.55 m at 5-22 s) and far below LS, Polynomial, and Piecewise alignment (about 1.2 m at 0.07 s)" width="85%">
+  </picture>
 </p>
 
 FoSA runs about 60–240× faster than the test-time adaptation methods. It processes more than 11
