@@ -50,7 +50,7 @@ video backbones.
 | UniDepth V2 | Single image | `fosa-unidepth` | [lpiccinelli-eth/UniDepth](https://github.com/lpiccinelli-eth/UniDepth) |
 | Video Depth Anything | Video | `fosa-vda` | [DepthAnything/Video-Depth-Anything](https://github.com/DepthAnything/Video-Depth-Anything) |
 | DVD | Video | `fosa-dvd` | [EnVision-Research/DVD](https://github.com/EnVision-Research/DVD) |
-| Depth Anything 3 | Single image | `fosa-da3` | [ByteDance-Seed/Depth-Anything-3](https://github.com/ByteDance-Seed/Depth-Anything-3) |
+| Depth Anything 3 | 1–N images | `fosa-da3` | [ByteDance-Seed/Depth-Anything-3](https://github.com/ByteDance-Seed/Depth-Anything-3) |
 
 </div>
 
@@ -110,17 +110,17 @@ and **bold** marks the best value in each column.
 
 <table>
 <thead>
-<tr><th rowspan="2" align="left"><sub>Method</sub></th><th rowspan="2" align="left"><sub>Type</sub></th><th colspan="2"><sub>NYUv2</sub></th><th colspan="2"><sub>KITTI-DC</sub></th><th colspan="2"><sub>DDAD</sub></th><th colspan="2"><sub>DyDToF</sub></th></tr>
-<tr><th><sub>RMSE</sub></th><th><sub>MAE</sub></th><th><sub>RMSE</sub></th><th><sub>MAE</sub></th><th><sub>RMSE</sub></th><th><sub>MAE</sub></th><th><sub>RMSE</sub></th><th><sub>MAE</sub></th></tr>
+<tr><th rowspan="2" align="left">Method</th><th rowspan="2" align="left">Type</th><th colspan="2">NYUv2</th><th colspan="2">KITTI-DC</th><th colspan="2">DDAD</th><th colspan="2">DyDToF</th></tr>
+<tr><th>RMSE</th><th>MAE</th><th>RMSE</th><th>MAE</th><th>RMSE</th><th>MAE</th><th>RMSE</th><th>MAE</th></tr>
 </thead>
 <tbody>
-<tr><td align="left"><sub>Zero-DC</sub></td><td align="left"><sub>TTA</sub></td><td align="center"><sub>0.152</sub></td><td align="center"><sub>0.097</sub></td><td align="center"><sub>1.515</sub></td><td align="center"><sub>0.509</sub></td><td align="center"><sub>7.163</sub></td><td align="center"><sub>3.621</sub></td><td align="center"><sub>3.399</sub></td><td align="center"><sub>2.038</sub></td></tr>
-<tr><td align="left"><sub>Marigold-DC</sub></td><td align="left"><sub>TTA</sub></td><td align="center"><sub>0.135</sub></td><td align="center"><sub><b>0.053</b></sub></td><td align="center"><sub>1.483</sub></td><td align="center"><sub>0.550</sub></td><td align="center"><sub>6.401</sub></td><td align="center"><sub>2.708</sub></td><td align="center"><sub>2.662</sub></td><td align="center"><sub>1.094</sub></td></tr>
-<tr><td align="left"><sub>TestPromptDC</sub></td><td align="left"><sub>TTA</sub></td><td align="center"><sub><b>0.128</b></sub></td><td align="center"><sub>0.054</sub></td><td align="center"><sub><b>1.480</b></sub></td><td align="center"><sub><b>0.482</b></sub></td><td align="center"><sub>5.652</sub></td><td align="center"><sub>1.963</sub></td><td align="center"><sub>2.311</sub></td><td align="center"><sub>0.927</sub></td></tr>
-<tr><td align="left"><sub>LS Solver</sub></td><td align="left"><sub>Align</sub></td><td align="center"><sub>0.175</sub></td><td align="center"><sub>0.088</sub></td><td align="center"><sub>2.321</sub></td><td align="center"><sub>1.227</sub></td><td align="center"><sub>6.316</sub></td><td align="center"><sub>3.683</sub></td><td align="center"><sub>2.638</sub></td><td align="center"><sub>1.707</sub></td></tr>
-<tr><td align="left"><sub>Polynomial</sub></td><td align="left"><sub>Align</sub></td><td align="center"><sub>0.169</sub></td><td align="center"><sub>0.084</sub></td><td align="center"><sub>2.255</sub></td><td align="center"><sub>1.168</sub></td><td align="center"><sub>5.183</sub></td><td align="center"><sub>2.672</sub></td><td align="center"><sub>2.337</sub></td><td align="center"><sub>1.306</sub></td></tr>
-<tr><td align="left"><sub>Piecewise</sub></td><td align="left"><sub>Align</sub></td><td align="center"><sub>0.172</sub></td><td align="center"><sub>0.086</sub></td><td align="center"><sub>2.314</sub></td><td align="center"><sub>1.203</sub></td><td align="center"><sub>5.792</sub></td><td align="center"><sub>3.111</sub></td><td align="center"><sub>2.466</sub></td><td align="center"><sub>1.438</sub></td></tr>
-<tr><td align="left"><sub><b>FoSA (Ours)</b></sub></td><td align="left"><sub>Align</sub></td><td align="center"><sub>0.148</sub></td><td align="center"><sub>0.064</sub></td><td align="center"><sub>1.749</sub></td><td align="center"><sub>0.585</sub></td><td align="center"><sub><b>4.551</b></sub></td><td align="center"><sub><b>1.527</b></sub></td><td align="center"><sub><b>1.854</b></sub></td><td align="center"><sub><b>0.798</b></sub></td></tr>
+<tr><td align="left">Zero-DC</td><td align="left">TTA</td><td align="center">0.152</td><td align="center">0.097</td><td align="center">1.515</td><td align="center">0.509</td><td align="center">7.163</td><td align="center">3.621</td><td align="center">3.399</td><td align="center">2.038</td></tr>
+<tr><td align="left">Marigold-DC</td><td align="left">TTA</td><td align="center">0.135</td><td align="center"><b>0.053</b></td><td align="center">1.483</td><td align="center">0.550</td><td align="center">6.401</td><td align="center">2.708</td><td align="center">2.662</td><td align="center">1.094</td></tr>
+<tr><td align="left">TestPromptDC</td><td align="left">TTA</td><td align="center"><b>0.128</b></td><td align="center">0.054</td><td align="center"><b>1.480</b></td><td align="center"><b>0.482</b></td><td align="center">5.652</td><td align="center">1.963</td><td align="center">2.311</td><td align="center">0.927</td></tr>
+<tr><td align="left">LS Solver</td><td align="left">Align</td><td align="center">0.175</td><td align="center">0.088</td><td align="center">2.321</td><td align="center">1.227</td><td align="center">6.316</td><td align="center">3.683</td><td align="center">2.638</td><td align="center">1.707</td></tr>
+<tr><td align="left">Polynomial</td><td align="left">Align</td><td align="center">0.169</td><td align="center">0.084</td><td align="center">2.255</td><td align="center">1.168</td><td align="center">5.183</td><td align="center">2.672</td><td align="center">2.337</td><td align="center">1.306</td></tr>
+<tr><td align="left">Piecewise</td><td align="left">Align</td><td align="center">0.172</td><td align="center">0.086</td><td align="center">2.314</td><td align="center">1.203</td><td align="center">5.792</td><td align="center">3.111</td><td align="center">2.466</td><td align="center">1.438</td></tr>
+<tr><td align="left"><b>FoSA (Ours)</b></td><td align="left">Align</td><td align="center">0.148</td><td align="center">0.064</td><td align="center">1.749</td><td align="center">0.585</td><td align="center"><b>4.551</b></td><td align="center"><b>1.527</b></td><td align="center"><b>1.854</b></td><td align="center"><b>0.798</b></td></tr>
 </tbody>
 </table>
 
