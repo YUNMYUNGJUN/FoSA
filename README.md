@@ -43,12 +43,16 @@ running 60–240× faster than them (0.09 s per frame, backbone included).
 FoSA aligns the output of a frozen foundation model, so the same alignment runs on single-image and
 video backbones.
 
+<div align="center">
+
 | 🗃️ Foundation model | 🎞️ Input | 🐍 conda env | 🔗 Official code |
 | :--- | :---: | :---: | :--- |
 | UniDepth V2 | Single image | `fosa-unidepth` | [lpiccinelli-eth/UniDepth](https://github.com/lpiccinelli-eth/UniDepth) |
 | Video Depth Anything | Video | `fosa-vda` | [DepthAnything/Video-Depth-Anything](https://github.com/DepthAnything/Video-Depth-Anything) |
 | DVD | Video | `fosa-dvd` | [EnVision-Research/DVD](https://github.com/EnVision-Research/DVD) |
 | Depth Anything 3 | Single image | `fosa-da3` | [ByteDance-Seed/Depth-Anything-3](https://github.com/ByteDance-Seed/Depth-Anything-3) |
+
+</div>
 
 ## 🚀 Quick Start
 
