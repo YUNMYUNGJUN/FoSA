@@ -101,8 +101,11 @@ cache built for another backbone, dataset, clip length, or crop.
 
 - FoSA and the data pipeline are deterministic: given the same backbone output, every metric is
   identical across runs.
-- UniDepth V2 (commit `bebc4b2`) and DAv3 reproduce the backbone outputs of the paper bit for bit
-  in the environments the paper used.
+- UniDepth V2 (commit `bebc4b2`) reproduces the backbone outputs of the paper bit for bit in the
+  environment that `scripts/setup_env.sh unidepth` creates, on every clip of the five benchmarks and
+  of VOID-150. With the versions pinned in UniDepth's own requirements (torch 2.2.0) its outputs
+  differ by about 0.25%, which moves the metrics in the fourth decimal.
+- DAv3 reproduces the backbone outputs of the paper bit for bit in the environment the paper used.
 - VDA matches to about 3e-5 relative; the same difference appears between two runs of the same code,
   so it comes from GPU kernel selection.
 - DVD's diffusion pipeline is not deterministic across runs, and its numbers move slightly with it.

@@ -25,7 +25,7 @@ def sequence_files(path):
 
 
 def load_sequence(path):
-    """One sequence saved with torch.save as a dict of tensors (see README.md):
+    """One sequence saved with torch.save as a dict of tensors:
 
         rgb     [N,3,H,W] uint8 (or float in [0,1])
         sparse  [N,H,W] float, metres, 0 = no measurement

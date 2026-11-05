@@ -1,11 +1,11 @@
 """
 main.py — FoSA: align a frozen depth backbone to sparse metric depth, clip by clip.
 
-    # sequences stored as .pt files (format: README.md, "Input format")
+    # sequences stored as .pt files (format: utils/clips.py, load_sequence)
     python main.py --config config/unidepth.yaml --input input/scene.pt --save-vis
     python main.py --config config/unidepth.yaml --input input/ --output outputs/
 
-    # benchmark evaluation: RMSE / MAE / TEPE (dataset layouts: README.md)
+    # benchmark evaluation: RMSE / MAE / TEPE (dataset layouts: docs/REPRODUCE.md)
     python main.py --config config/unidepth.yaml --dataset kitti_video --dataset-path /data/KITTI-DC
 
 Frames are aligned in non-overlapping clips of --num-frames (3, as in the paper), and
@@ -58,7 +58,7 @@ def parse_args():
     p.add_argument('--vis-width', type=int, default=640, help='panel width of the visualisation')
 
     g = p.add_argument_group('benchmark (--dataset)')
-    g.add_argument('--dataset-path', help='dataset root, laid out as in README.md')
+    g.add_argument('--dataset-path', help='dataset root, laid out as in docs/REPRODUCE.md')
     g.add_argument('--name', default='', help='run name (default <backbone>_<dataset>)')
     g.add_argument('--num-sparse-samples', type=int, default=500,
                    help='NYUv2 / DyDToF: anchors drawn from the dense depth per frame')

@@ -13,8 +13,8 @@ their respective licenses.
 
 No third-party source code is copied into this repository. The backbone wrappers in
 `utils/base_models/` import the official code of each foundation model, which
-`scripts/setup_env.sh` clones into `third_party/` (not tracked); the README lists their sources,
-pinned commits, and licenses under "Third-Party Components".
+`scripts/setup_env.sh` clones into `third_party/` (not tracked) at the commits pinned in that
+script; that code and the model weights keep their own licenses.
 
 The following third-party values appear in the code:
 
